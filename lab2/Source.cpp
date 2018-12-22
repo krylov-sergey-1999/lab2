@@ -8,6 +8,40 @@ typedef struct Node {
 } Node; // Чтобы не писать каждый раз struct мы определили новый тип.
 
 
+void push(Node **head, int data); // добавление в начало
+int pop(Node **head);  // удалени с головы
+Node *getNth(Node *head, int n);
+Node *getLast(Node *head);
+void pushBack(Node *head, int value);
+Node *getLastButOne(Node *head);
+int popBack(Node **head);
+void insert(Node *head, unsigned n, int val);
+void printLinkedList(const Node *head);
+int getLen(Node *head);
+int deleteNth(Node **head, int n);
+void fromArray(Node **head, int *arr, size_t size);
+
+void main() {
+	Node* head = NULL;
+	int arr[] = { 1,2,3,4,5,6,7,8,9,10,11 };
+	fromArray(&head, arr, sizeof(arr)/sizeof(arr[0]));
+	printLinkedList(head);
+	int l = getLen(head);
+	int i = 0;
+	while (i < l) {
+		deleteNth(&head, i);
+		i++;
+		l--;
+	}
+	printLinkedList(head);
+	getch();
+}
+
+
+
+
+
+
 void push(Node **head, int data) {
 	// Так как указатель head изменяется, то необходимо передавать указатель на указатель.
 	Node *tmp = (Node *)malloc(sizeof(Node));  // Создали новый узел, на который ссылается локальная переменная tmp
@@ -15,7 +49,6 @@ void push(Node **head, int data) {
 	tmp->next = (*head); // Перекинули указатель tmp на предыдущий узел
 	(*head) = tmp;  // Перекинули указатель head на вновь созданный узел tmp
 }
-
 
 int pop(Node **head) {
 	// функция pop: она удаляет элемент, на который указывает head и возвращает его значение
@@ -32,7 +65,6 @@ int pop(Node **head) {
 	return val;
 }
 
-
 Node *getNth(Node *head, int n) {
 	// возвращает указатель на n-й элемент списка
 	// Так как мы знаем адрес только первого элемента,
@@ -46,7 +78,6 @@ Node *getNth(Node *head, int n) {
 	return head;
 }
 
-
 Node *getLast(Node *head) {
 	// Для нахождение последнего элемента будем передирать друг за другом элементы до тех пор,
 	// пока указатель next одного из элементов не станет равным NULL
@@ -59,7 +90,6 @@ Node *getLast(Node *head) {
 	return head;
 }
 
-
 void pushBack(Node *head, int value) {
 	// добавляет новый элемент в конец списка
 	// Для вставки нового элемента в конец сначала получаем указатель на последний элемент,
@@ -70,7 +100,6 @@ void pushBack(Node *head, int value) {
 	tmp->next = NULL;
 	last->next = tmp;
 }
-
 
 Node *getLastButOne(Node *head) {
 	// функция getLastButOne, возвращает указатель на предпоследний элемент
@@ -85,7 +114,6 @@ Node *getLastButOne(Node *head) {
 	}
 	return head;
 }
-
 
 int popBack(Node **head) {
 	Node *lastbn = NULL;
@@ -138,7 +166,6 @@ void insert(Node *head, unsigned n, int val) {
 	head->next = tmp;
 }
 
-
 void printLinkedList(const Node *head) {
 	while (head) {
 		printf("%d ", head->value);
@@ -146,7 +173,6 @@ void printLinkedList(const Node *head) {
 	}
 	printf("\n");
 }
-
 
 int deleteNth(Node **head, int n) {
 	if (n == 0) {
@@ -163,7 +189,6 @@ int deleteNth(Node **head, int n) {
 	}
 }
 
-
 void deleteList(Node **head) {
 	Node *prev = NULL;
 	while ((*head)->next) {
@@ -173,7 +198,6 @@ void deleteList(Node **head) {
 	}
 	free(*head);
 }
-
 
 void fromArray(Node **head, int *arr, size_t size) {
 	// создать список из массива
@@ -186,6 +210,11 @@ void fromArray(Node **head, int *arr, size_t size) {
 	} while (i-- != 0);
 }
 
-void main() {
-
+int getLen(Node *head) {
+	int l = 0;
+	while (head) {
+		l++;
+		head = head->next;
+	}
+	return l;
 }
